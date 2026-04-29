@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HECTOR - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white min-h-screen flex flex-col items-center justify-center p-4 relative">
+    <video autoplay loop muted playsinline class="fixed inset-0 w-full h-full object-cover opacity-15 pointer-events-none z-[-2]">
+        <source src="https://assets.mixkit.co/videos/preview/mixkit-drone-flying-over-a-city-at-night-24209-large.mp4" type="video/mp4">
+    </video>
+    <div class="fixed inset-0 bg-gray-900/60 backdrop-blur-[2px] pointer-events-none z-[-1]"></div>
+
+    <div class="w-full bg-blue-900/40 text-blue-300 py-3 px-4 md:px-8 text-center text-xs md:text-sm font-bold tracking-widest border-b border-blue-500/30 fixed top-0 z-50 backdrop-blur-xl flex justify-between items-center shadow-lg">
+        <span id="topBannerTxt" class="flex items-center gap-2 uppercase">
+            <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+            HECTOR Drone Protecting You
+        </span>
+        <select id="langSelect" class="bg-gray-800 text-white text-xs p-1.5 rounded-lg border border-gray-600 outline-none cursor-pointer shadow-inner">
+            <option value="en">English</option>
+            <option value="ta">Tamil</option>
+            <option value="hi">Hindi</option>
+        </select>
+    </div>
+
+    <div class="w-full max-w-md bg-gray-800/80 backdrop-blur-2xl rounded-3xl p-6 md:p-8 text-center border border-gray-600/50 shadow-[0_0_50px_rgba(0,0,0,0.5)] mt-16">
+        <h1 class="text-3xl font-black mb-2 tracking-wide"><span id="welcomeTxt">Welcome,</span> <span id="userName" class="text-blue-400 drop-shadow-md">User</span></h1>
+        <p class="text-gray-400 mb-8 font-medium" id="subTxt">HECTOR is ready to protect you.</p>
+
+        <button id="sosBtn" class="w-48 h-48 md:w-56 md:h-56 bg-gradient-to-br from-red-500 to-red-700 rounded-full shadow-[0_0_60px_rgba(220,38,38,0.5)] hover:shadow-[0_0_90px_rgba(220,38,38,0.8)] hover:scale-105 transition-all duration-300 active:scale-95 flex items-center justify-center mx-auto mb-8 border-[6px] border-red-400 group relative">
+            <span id="sosBtnTxt" class="text-6xl md:text-7xl font-black tracking-widest text-white drop-shadow-lg group-hover:animate-pulse">SOS</span>
+            <div class="absolute inset-0 rounded-full border-4 border-red-300 animate-ping opacity-20"></div>
+        </button>
+        
+        <div class="grid grid-cols-2 gap-3 mb-6">
+            <a href="profile.html" class="bg-gray-700/80 py-4 rounded-xl hover:bg-gray-600 transition font-bold border border-gray-600 shadow-md flex items-center justify-center gap-2 text-sm" id="btnData">
+                👤 Your Data
+            </a>
+            <a href="history.html" class="bg-gray-700/80 py-4 rounded-xl hover:bg-gray-600 transition font-bold border border-gray-600 shadow-md flex items-center justify-center gap-2 text-sm" id="btnHistory">
+                📜 History
+            </a>
+            <a href="family.html" target="_blank" class="bg-blue-600/20 text-blue-400 py-4 rounded-xl hover:bg-blue-600/40 transition font-black border border-blue-500/30 shadow-md col-span-2 tracking-widest uppercase flex items-center justify-center gap-2 text-sm" id="btnFamily">
+                👨‍👩‍👧‍👦 Family Tracking
+            </a>
+        </div>
+
+        <div class="mt-4 flex gap-3 overflow-hidden rounded-xl h-24 md:h-28 border border-gray-700 shadow-inner">
+            <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&q=80&w=400" class="w-1/2 object-cover hover:scale-110 transition duration-700" alt="Professional Woman Tech">
+            <img src="https://images.unsplash.com/photo-1580281658626-ee379f3cce93?auto=format&fit=crop&q=80&w=400" class="w-1/2 object-cover hover:scale-110 transition duration-700" alt="Drone Security">
+        </div>
+        <p class="text-[10px] md:text-xs text-gray-500 mt-3 font-mono tracking-widest">EMPOWERING WOMEN WITH NEXT-GEN AI PATROLS</p>
+
+        <button onclick="logout()" class="mt-4 text-gray-500 hover:text-red-400 text-xs font-bold underline transition">Logout</button>
+    </div>
+
+    <script>
+        if (!localStorage.getItem("loggedIn")) window.location.href = "login.html";
+        const userData = JSON.parse(localStorage.getItem("userData") || "{}");
+        if(userData.name) document.getElementById('userName').innerText = userData.name;
+
+        document.getElementById('sosBtn').addEventListener('click', () => {
+            const userX = 20 + Math.random() * 60;
+            const userY = 20 + Math.random() * 60;
+            const destX = 20 + Math.random() * 60;
+            const destY = 20 + Math.random() * 60;
+
+            const droneData = { id: "HECTOR-D01", battery: Math.floor(70 + Math.random() * 30), speed: 35, signal: "Strong" };
+            const tripData = {
+                userX, userY, destX, destY,
+                droneX: userX + (Math.random() > 0.5 ? 15 : -15),
+                droneY: userY + (Math.random() > 0.5 ? 15 : -15),
+                startTime: new Date().getTime(),
+                status: "Active"
+            };
+
+            localStorage.setItem("droneData", JSON.stringify(droneData));
+            localStorage.setItem("tripData", JSON.stringify(tripData));
+            window.location.href = "tracking.html";
+        });
+
+        function logout() { localStorage.removeItem("loggedIn"); window.location.href = "login.html"; }
+
+        const dict = {
+            en: { sos: "SOS", history: "📜 History", family: "👨‍👩‍👧‍👦 Family Tracking", data: "👤 Your Data", welcome: "Welcome,", sub: "HECTOR is ready to protect you.", top: "HECTOR Drone Protecting You" },
+            ta: { sos: "SOS", history: "📜 வரலாறு", family: "👨‍👩‍👧‍👦 குடும்ப கண்காணிப்பு", data: "👤 உங்கள் தரவு", welcome: "வரவேற்பு,", sub: "ஹெக்டர் உங்களை பாதுகாக்க தயார்.", top: "ஹெக்டர் உங்களை பாதுகாக்கிறது" },
+            hi: { sos: "SOS", history: "📜 इतिहास", family: "👨‍👩‍👧‍👦 परिवार ट्रैकिंग", data: "👤 आपका डेटा", welcome: "स्वागत हे,", sub: "हेक्टर आपकी रक्षा के लिए तैयार है।", top: "हेक्टर आपकी रक्षा कर रहा है" }
+        };
+        const langSelect = document.getElementById('langSelect');
+        langSelect.addEventListener('change', (e) => {
+            const l = e.target.value;
+            localStorage.setItem('prefLang', l);
+            document.getElementById('sosBtnTxt').innerHTML = dict[l].sos;
+            document.getElementById('btnHistory').innerHTML = dict[l].history;
+            document.getElementById('btnFamily').innerHTML = dict[l].family;
+            document.getElementById('btnData').innerHTML = dict[l].data;
+            document.getElementById('welcomeTxt').innerText = dict[l].welcome;
+            document.getElementById('subTxt').innerText = dict[l].sub;
+            document.getElementById('topBannerTxt').innerHTML = `<span class="w-2 h-2 rounded-full bg-green-400 animate-pulse inline-block mr-2"></span>` + dict[l].top;
+        });
+
+        // Initialize Language
+        const savedLang = localStorage.getItem('prefLang') || 'en';
+        langSelect.value = savedLang;
+        langSelect.dispatchEvent(new Event('change'));
+    </script>
+</body>
+</html>

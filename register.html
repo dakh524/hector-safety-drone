@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HECTOR - Register</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center p-4">
+    <div class="bg-gray-800 p-8 rounded-xl w-full max-w-md shadow-2xl border border-gray-700">
+        <h1 class="text-3xl font-bold mb-6 text-center text-blue-400">Register</h1>
+        <form id="regForm" class="space-y-4">
+            <input id="name" type="text" placeholder="Name" class="w-full bg-gray-700 rounded p-3" required>
+            <input id="phone" type="text" placeholder="Phone" class="w-full bg-gray-700 rounded p-3" required>
+            <input id="aadhaar" type="text" placeholder="Aadhaar" class="w-full bg-gray-700 rounded p-3" required>
+            <input id="eName" type="text" placeholder="Emergency Contact Name" class="w-full bg-gray-700 rounded p-3" required>
+            <input id="ePhone" type="text" placeholder="Emergency Phone" class="w-full bg-gray-700 rounded p-3" required>
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded transition">Register</button>
+        </form>
+        <div class="mt-4 text-center">
+            <a href="login.html" class="text-blue-400 hover:underline text-sm">Already have an account? Login</a>
+        </div>
+    </div>
+    <script>
+        document.getElementById('regForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const userData = {
+                name: document.getElementById('name').value,
+                phone: document.getElementById('phone').value,
+                aadhaar: document.getElementById('aadhaar').value,
+                emergencyName: document.getElementById('eName').value,
+                emergencyPhone: document.getElementById('ePhone').value
+            };
+            localStorage.setItem("userData", JSON.stringify(userData));
+            localStorage.setItem("loggedIn", "true");
+            window.location.href = 'dashboard.html';
+        });
+    </script>
+</body>
+</html>

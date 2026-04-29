@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-surface": "#e0e2ed",
+                    "on-secondary-fixed-variant": "#39475f",
+                    "primary-fixed-dim": "#adc7ff",
+                    "on-secondary-fixed": "#0d1c32",
+                    "on-tertiary-fixed-variant": "#374767",
+                    "on-secondary": "#233148",
+                    "on-primary-fixed": "#001a41",
+                    "surface": "#10131b",
+                    "tertiary-fixed": "#d8e2ff",
+                    "tertiary-fixed-dim": "#b6c6ed",
+                    "surface-bright": "#363942",
+                    "on-error-container": "#ffdad6",
+                    "on-surface": "#e0e2ed",
+                    "on-tertiary-fixed": "#091b39",
+                    "secondary-fixed-dim": "#b9c7e4",
+                    "error": "#ffb4ab",
+                    "on-primary-container": "#00285b",
+                    "secondary": "#b9c7e4",
+                    "secondary-container": "#3c4962",
+                    "on-background": "#e0e2ed",
+                    "inverse-on-surface": "#2d3039",
+                    "surface-container-lowest": "#0b0e16",
+                    "outline": "#8b90a0",
+                    "primary": "#adc7ff",
+                    "on-primary": "#002e68",
+                    "surface-container": "#1c2027",
+                    "on-surface-variant": "#c1c6d7",
+                    "surface-tint": "#adc7ff",
+                    "surface-container-high": "#272a32",
+                    "background": "#10131b",
+                    "on-primary-fixed-variant": "#004493",
+                    "secondary-fixed": "#d6e3ff",
+                    "outline-variant": "#414754",
+                    "primary-fixed": "#d8e2ff",
+                    "surface-variant": "#31353d",
+                    "inverse-primary": "#005bc0",
+                    "surface-dim": "#10131b",
+                    "error-container": "#93000a",
+                    "on-error": "#690005",
+                    "on-secondary-container": "#abb9d6",
+                    "primary-container": "#4a8eff",
+                    "surface-container-highest": "#31353d",
+                    "on-tertiary": "#20304f",
+                    "surface-container-low": "#181c23",
+                    "tertiary": "#b6c6ed",
+                    "tertiary-container": "#8191b5",
+                    "on-tertiary-container": "#192948"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "8px",
+                    "card-padding": "24px",
+                    "gutter": "24px",
+                    "margin": "32px",
+                    "container-max-width": "1440px"
+            },
+            "fontFamily": {
+                    "display-lg": ["Inter"],
+                    "data-mono": ["Inter"],
+                    "label-caps": ["Inter"],
+                    "body-md": ["Inter"],
+                    "title-sm": ["Inter"],
+                    "headline-md": ["Inter"]
+            },
+            "fontSize": {
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "data-mono": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .map-bg {
+            background-color: #0A192F;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(0, 123, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(0, 123, 255, 0.05) 0%, transparent 50%);
+        }
+        .pulse-path {
+            stroke-dasharray: 10;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen overflow-hidden">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex items-center justify-between px-6 py-4 dark:bg-[#0A192F]/80 backdrop-blur-2xl border-b border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.1)]">
+<div class="flex items-center gap-4">
+<button class="active:scale-95 duration-200 p-2 hover:dark:bg-white/5 transition-colors rounded-full">
+<span class="material-symbols-outlined dark:text-[#007BFF]">arrow_back</span>
+</button>
+<h1 class="font-['Inter'] tracking-tight font-semibold text-xl">Live Tracking</h1>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-10 h-10 rounded-full border-2 border-[#007BFF] overflow-hidden">
+<img alt="User avatar badge" class="w-full h-full object-cover" data-alt="Close up portrait of a female operator wearing a sleek, high-tech communication headset. She is set against a dark, futuristic mission control background with soft blue atmospheric lighting. The style is hyper-realistic with sharp focus on her professional expression, embodying the brand's core values of security and authoritative reliability. The color palette is dominated by deep navy blues and sharp tech-accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDWf-V4tBixBaHqcM0jUAXn4nC978UNdqS-GLT-YtRtXkcQgAWFBob6Epy-OfnMimhttY_6kKRmWldea4JqRREEY9hZW2ou-uYtfvGcNbtRGF5i8z3rk-_3aJfuuHWDR_S6hD09gpXY6erV14RxypMjnSr8yOO_UJeUkYFm6NmIxquKUEQvbxiNQyH7a5phLksvxdYwcxGP-Jx3jeAOCggkHHKg9sZ3Z-X-u206PHnUkN-uZn-X__Qgf4PQLTpJFVFVK_uNiRsBzw"/>
+</div>
+</div>
+</header>
+<!-- Main Map Canvas -->
+<main class="relative w-full h-screen map-bg" data-location="San Francisco">
+<!-- Map Texture Mockup -->
+<div class="absolute inset-0 opacity-20 pointer-events-none">
+<svg height="100%" width="100%" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<pattern height="100" id="grid" patternunits="userSpaceOnUse" width="100">
+<path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"></path>
+</pattern>
+</defs>
+<rect fill="url(#grid)" height="100%" width="100%"></rect>
+</svg>
+</div>
+<!-- Tracking Visuals -->
+<div class="absolute inset-0 flex items-center justify-center">
+<svg class="w-full h-full" viewbox="0 0 800 600">
+<!-- User Icon (Priya) -->
+<g transform="translate(450, 250)">
+<circle class="animate-pulse" fill="#007BFF" r="12"></circle>
+<circle fill="white" r="6"></circle>
+<text class="fill-white font-bold text-xs uppercase tracking-tighter" text-anchor="middle" y="30">Priya</text>
+</g>
+<!-- Trail Path -->
+<path class="opacity-50" d="M 350 400 Q 400 350 450 250" fill="none" stroke="#007BFF" stroke-dasharray="8 4" stroke-width="2"></path>
+<!-- Drone Icon (HECTOR-D01) -->
+<g transform="translate(350, 400)">
+<rect fill="#0A192F" height="30" rx="4" stroke="#007BFF" stroke-width="2" width="30" x="-15" y="-15"></rect>
+</g></svg><span class="material-symbols-outlined text-[#007BFF] absolute" style="font-size: 20px; transform: translate(-10px, -10px);">shield_with_heart</span>
+<text class="fill-[#007BFF] font-black text-[10px] tracking-widest" text-anchor="middle" y="35">HECTOR-D01</text>
+</div>
+<!-- Action Floating Buttons -->
+<div class="absolute right-6 top-24 flex flex-col gap-4">
+<button class="flex items-center gap-3 px-6 py-3 rounded-xl glass-card text-error font-bold active:scale-95 transition-all">
+<span class="material-symbols-outlined">notification_important</span>
+                Trigger Siren
+            </button>
+<button class="flex items-center gap-3 px-6 py-3 rounded-xl glass-card text-on-surface font-bold active:scale-95 transition-all">
+<span class="material-symbols-outlined">record_voice_over</span>
+                Voice Alert
+            </button>
+<button class="flex items-center gap-3 px-6 py-3 rounded-xl bg-error-container text-on-error-container font-black active:scale-95 transition-all shadow-lg shadow-red-900/20">
+<span class="material-symbols-outlined" data-weight="fill">emergency</span>
+                Contact Police
+            </button>
+</div>
+<!-- Bottom Overlay Card -->
+<div class="absolute bottom-24 left-1/2 -translate-x-1/2 w-[calc(100%-48px)] max-w-2xl">
+<div class="glass-card rounded-3xl p-6 shadow-2xl shadow-blue-500/10">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+<!-- Metrics -->
+<div class="space-y-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">schedule</span>
+<div>
+<p class="text-xs text-slate-400 font-label-caps">ETA</p>
+<p class="text-xl font-bold font-['Inter']">8 mins</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">distance</span>
+<div>
+<p class="text-xs text-slate-400 font-label-caps">DISTANCE</p>
+<p class="text-xl font-bold font-['Inter']">1.2 km</p>
+</div>
+</div>
+</div>
+<!-- Status Display -->
+<div class="flex flex-col items-center justify-center border-x border-white/10 px-6">
+<div class="bg-primary/10 border border-primary/20 px-4 py-2 rounded-full mb-2">
+<p class="text-primary font-bold text-xs uppercase tracking-widest flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                                Drone Following: active
+                            </p>
+</div>
+<p class="text-slate-500 text-[10px] text-center font-medium">Last signal: 200ms ago</p>
+</div>
+<!-- Safety Score Gauge -->
+<div class="flex flex-col items-center">
+<div class="relative w-20 h-20">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-white/5" cx="40" cy="40" fill="transparent" r="36" stroke="currentColor" stroke-width="6"></circle>
+<circle cx="40" cy="40" fill="transparent" r="36" stroke="#22C55E" stroke-dasharray="226.19" stroke-dashoffset="13.57" stroke-linecap="round" stroke-width="6"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-lg font-black text-white">94%</span>
+</div>
+</div>
+<p class="mt-2 text-[10px] text-slate-400 font-label-caps text-center uppercase tracking-tighter">AI Route Safety</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe dark:bg-[#0A192F]/90 backdrop-blur-3xl border-t border-white/10 shadow-[0_-10px_40px_rgba(0,123,255,0.15)]">
+<div class="flex flex-col items-center justify-center dark:text-slate-500 hover:dark:text-white transition-all active:scale-90 duration-200 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="space_dashboard">space_dashboard</span>
+<span class="font-['Inter'] text-[10px] font-bold uppercase tracking-widest mt-1">Dashboard</span>
+</div>
+<div class="flex flex-col items-center justify-center dark:text-[#007BFF] dark:bg-[#007BFF]/10 rounded-xl px-4 py-2 border border-[#007BFF]/20 transition-all active:scale-90 duration-200 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="route">route</span>
+<span class="font-['Inter'] text-[10px] font-bold uppercase tracking-widest mt-1">Tracking</span>
+</div>
+<div class="flex flex-col items-center justify-center dark:text-slate-500 hover:dark:text-white transition-all active:scale-90 duration-200 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="notifications_active">notifications_active</span>
+<span class="font-['Inter'] text-[10px] font-bold uppercase tracking-widest mt-1">Alerts</span>
+</div>
+<div class="flex flex-col items-center justify-center dark:text-slate-500 hover:dark:text-white transition-all active:scale-90 duration-200 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span class="font-['Inter'] text-[10px] font-bold uppercase tracking-widest mt-1">History</span>
+</div>
+</nav>
+</body></html>

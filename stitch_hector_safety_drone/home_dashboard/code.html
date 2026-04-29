@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "inverse-surface": "#e0e2ed",
+                "on-secondary-fixed-variant": "#39475f",
+                "primary-fixed-dim": "#adc7ff",
+                "on-secondary-fixed": "#0d1c32",
+                "on-tertiary-fixed-variant": "#374767",
+                "on-secondary": "#233148",
+                "on-primary-fixed": "#001a41",
+                "surface": "#10131b",
+                "tertiary-fixed": "#d8e2ff",
+                "tertiary-fixed-dim": "#b6c6ed",
+                "surface-bright": "#363942",
+                "on-error-container": "#ffdad6",
+                "on-surface": "#e0e2ed",
+                "on-tertiary-fixed": "#091b39",
+                "secondary-fixed-dim": "#b9c7e4",
+                "error": "#ffb4ab",
+                "on-primary-container": "#00285b",
+                "secondary": "#b9c7e4",
+                "secondary-container": "#3c4962",
+                "on-background": "#e0e2ed",
+                "inverse-on-surface": "#2d3039",
+                "surface-container-lowest": "#0b0e16",
+                "outline": "#8b90a0",
+                "primary": "#adc7ff",
+                "on-primary": "#002e68",
+                "surface-container": "#1c2027",
+                "on-surface-variant": "#c1c6d7",
+                "surface-tint": "#adc7ff",
+                "surface-container-high": "#272a32",
+                "background": "#10131b",
+                "on-primary-fixed-variant": "#004493",
+                "secondary-fixed": "#d6e3ff",
+                "outline-variant": "#414754",
+                "primary-fixed": "#d8e2ff",
+                "surface-variant": "#31353d",
+                "inverse-primary": "#005bc0",
+                "surface-dim": "#10131b",
+                "error-container": "#93000a",
+                "on-error": "#690005",
+                "on-secondary-container": "#abb9d6",
+                "primary-container": "#4a8eff",
+                "surface-container-highest": "#31353d",
+                "on-tertiary": "#20304f",
+                "surface-container-low": "#181c23",
+                "tertiary": "#b6c6ed",
+                "tertiary-container": "#8191b5",
+                "on-tertiary-container": "#192948"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "unit": "8px",
+                "card-padding": "24px",
+                "gutter": "24px",
+                "margin": "32px",
+                "container-max-width": "1440px"
+            },
+            "fontFamily": {
+                "display-lg": ["Inter"],
+                "data-mono": ["Inter"],
+                "label-caps": ["Inter"],
+                "body-md": ["Inter"],
+                "title-sm": ["Inter"],
+                "headline-md": ["Inter"]
+            },
+            "fontSize": {
+                "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "data-mono": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .sos-glow {
+            box-shadow: 0 0 40px rgba(239, 68, 68, 0.4);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-[#0A192F] text-on-background font-body-md min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex items-center justify-between px-6 py-4 dark:bg-[#0A192F]/80 backdrop-blur-2xl border-b border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.1)]">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined dark:text-[#007BFF] text-2xl" data-icon="shield_with_heart">shield_with_heart</span>
+<h1 class="text-2xl font-black tracking-tighter dark:text-[#007BFF] italic">HECTOR</h1>
+</div>
+<div class="flex items-center gap-4">
+<div class="text-right hidden sm:block">
+<p class="font-['Inter'] text-[10px] font-bold uppercase tracking-widest dark:text-slate-400">System Status</p>
+<p class="font-['Inter'] text-sm font-medium text-primary">SECURE</p>
+</div>
+<div class="w-10 h-10 rounded-full border border-[#007BFF]/30 overflow-hidden">
+<img alt="User avatar" class="w-full h-full object-cover" data-alt="A professional portrait of a woman named Priya with a confident expression, set against a dark, tech-focused background with subtle blue neon accents. The lighting is cinematic and focused, highlighting her features while maintaining a sophisticated, high-security corporate aesthetic consistent with a mission control environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKo_crLdR0vBiMmQkfF03yU2mwJOiEe_OuGS3Vqmivpl8Sqh2mCmBv7f13AJq9__owCp_ztClaCYp8XNg7cAWkkQH_EW7ne_x55xAcj_74241l3GjuEmcI6bh_qlqwSg42s1sZL8T7fZBlLzFaaRplvsBUOi30q7u1MZR1EXq06bl6NoyScxbsd9Z5PQUpXWlFv-KHD24pzIfWvNwI7Lk3DmIwz_FOAmWVh6Hv1T9Gp_CLEwO-pdQqAvLzbyJA7oB3cvWK41e6uoo"/>
+</div>
+</div>
+</header>
+<main class="pt-24 px-6 max-w-[1440px] mx-auto">
+<!-- Welcome Section -->
+<section class="mb-8">
+<div class="flex justify-between items-end">
+<div>
+<h2 class="font-display-lg text-display-lg mb-1">Welcome back, Priya</h2>
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<span class="font-label-caps text-label-caps">Safety status: Protected</span>
+</div>
+</div>
+<div class="glass-card rounded-xl px-4 py-3 flex items-center gap-3">
+<div class="p-2 bg-[#007BFF]/10 rounded-lg">
+<span class="material-symbols-outlined text-primary" data-icon="flightsmode">flightsmode</span>
+</div>
+<div>
+<p class="text-[10px] uppercase tracking-tighter text-slate-400 font-bold">Assigned Drone</p>
+<p class="text-sm font-bold text-white">HECTOR-D01 <span class="text-primary ml-2">85%</span></p>
+</div>
+</div>
+</div>
+</section>
+<!-- SOS Central Feature -->
+<section class="flex flex-col items-center justify-center py-12 relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-b from-[#007BFF]/5 to-transparent rounded-full blur-3xl -z-10"></div>
+<button class="group relative flex items-center justify-center w-64 h-64 rounded-full bg-error-container border-4 border-error/20 sos-glow active:scale-95 transition-transform duration-200">
+<div class="absolute inset-0 rounded-full animate-ping bg-error/20"></div>
+<div class="flex flex-col items-center gap-2">
+<span class="material-symbols-outlined text-6xl text-on-error-container" data-icon="emergency" style="font-variation-settings: 'FILL' 1;">emergency</span>
+<span class="font-display-lg text-3xl font-black tracking-widest text-on-error-container">SOS</span>
+</div>
+</button>
+<p class="mt-8 font-label-caps text-label-caps text-slate-400 animate-pulse">Long press for emergency extraction</p>
+</section>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 mt-8">
+<!-- Destination Input -->
+<div class="md:col-span-12 glass-card rounded-2xl p-6">
+<label class="font-label-caps text-label-caps text-primary mb-4 block">Navigation Terminal</label>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-slate-400" data-icon="near_me">near_me</span>
+<input class="w-full bg-white/5 border border-white/10 rounded-xl py-4 pl-12 pr-4 text-white placeholder:text-slate-500 focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all" placeholder="Where are you going?" type="text"/>
+</div>
+</div>
+<!-- Quick Actions Bento Grid -->
+<div class="md:col-span-12 grid grid-cols-1 sm:grid-cols-3 gap-6">
+<button class="glass-card rounded-2xl p-6 flex flex-col items-start gap-4 hover:bg-white/10 transition-all border-l-4 border-l-primary group">
+<div class="p-3 bg-primary/10 rounded-xl text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" data-icon="rocket_launch">rocket_launch</span>
+</div>
+<div class="text-left">
+<p class="font-title-sm text-title-sm text-white">Start Drone Monitoring</p>
+<p class="text-xs text-slate-400 mt-1">Deploy HECTOR-D01 to your current location.</p>
+</div>
+</button>
+<button class="glass-card rounded-2xl p-6 flex flex-col items-start gap-4 hover:bg-white/10 transition-all group">
+<div class="p-3 bg-error/10 rounded-xl text-error group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" data-icon="phone_forwarded">phone_forwarded</span>
+</div>
+<div class="text-left">
+<p class="font-title-sm text-title-sm text-white">Emergency Call</p>
+<p class="text-xs text-slate-400 mt-1">Direct line to local emergency responders.</p>
+</div>
+</button>
+<button class="glass-card rounded-2xl p-6 flex flex-col items-start gap-4 hover:bg-white/10 transition-all group">
+<div class="p-3 bg-tertiary/10 rounded-xl text-tertiary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" data-icon="campaign">campaign</span>
+</div>
+<div class="text-left">
+<p class="font-title-sm text-title-sm text-white">Voice Alert</p>
+<p class="text-xs text-slate-400 mt-1">Activate drone loudspeakers and sirens.</p>
+</div>
+</button>
+</div>
+<!-- Live Feed Preview -->
+<div class="md:col-span-8 glass-card rounded-2xl overflow-hidden relative min-h-[300px]">
+<img alt="Live city drone feed" class="absolute inset-0 w-full h-full object-cover opacity-60" data-alt="A cinematic night-time drone perspective view over a modern metropolitan area with vibrant blue and white street lights. The image has a technical overlay including a digital grid, telemetry data, and scanning crosshairs. The atmosphere is crisp and high-definition, reflecting a state-of-the-art security surveillance system with high contrast and deep navy shadows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRn59lVQt67mf4Z3_ydB2D1k60NFZyu-DhjXNOYzJziPBhPh6b64gKZIhp_EcF8Y__2LzttRqisinvai-7oLsbV5iR8Bc0WEEElEd1CXA4cGEWt3--sSY6jPuFiHD7RYUxn4HlS2rZ6eNzeXzNx4u2crctF3szKucyNBB9WgAKfThRZKbEHY50MgWUjLjNvaqWZ5pYnEr0ZpYp0xuQOaPlZAvoTMU_FLs7qQ-YyInbX2VZU50brw_qLHBP3jjgwiL5jipi0Lni1A4"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent"></div>
+<div class="absolute top-4 left-4 flex items-center gap-2 bg-black/50 backdrop-blur-md px-3 py-1 rounded-full border border-white/20">
+<div class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+<span class="text-[10px] font-bold text-white uppercase tracking-widest">Live Feed: D01</span>
+</div>
+<div class="absolute bottom-6 left-6 right-6 flex justify-between items-end">
+<div>
+<p class="text-primary font-bold text-sm">Downtown Sector 4</p>
+<p class="text-slate-300 text-xs">Clear visibility • 4.2km range</p>
+</div>
+<span class="material-symbols-outlined text-white/50" data-icon="fullscreen">fullscreen</span>
+</div>
+</div>
+<!-- Recent Activity -->
+<div class="md:col-span-4 glass-card rounded-2xl p-6">
+<h3 class="font-title-sm text-title-sm text-white mb-4">Mission Logs</h3>
+<div class="space-y-4">
+<div class="flex gap-4 items-start pb-4 border-b border-white/5">
+<div class="w-2 h-2 mt-2 rounded-full bg-primary"></div>
+<div>
+<p class="text-sm font-medium text-white">Route monitoring completed</p>
+<p class="text-[10px] text-slate-500">24 mins ago • Home to Office</p>
+</div>
+</div>
+<div class="flex gap-4 items-start pb-4 border-b border-white/5">
+<div class="w-2 h-2 mt-2 rounded-full bg-slate-600"></div>
+<div>
+<p class="text-sm font-medium text-white">System self-check: OK</p>
+<p class="text-[10px] text-slate-500">2 hours ago • All sensors nominal</p>
+</div>
+</div>
+<div class="flex gap-4 items-start">
+<div class="w-2 h-2 mt-2 rounded-full bg-primary"></div>
+<div>
+<p class="text-sm font-medium text-white">New perimeter set</p>
+<p class="text-[10px] text-slate-500">Yesterday • Safe Zone: Residential</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe dark:bg-[#0A192F]/90 backdrop-blur-3xl border-t border-white/10 shadow-[0_-10px_40px_rgba(0,123,255,0.15)] rounded-t-2xl">
+<!-- Dashboard Active -->
+<a class="flex flex-col items-center justify-center dark:text-[#007BFF] dark:bg-[#007BFF]/10 rounded-xl px-4 py-2 border border-[#007BFF]/20 active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="space_dashboard" style="font-variation-settings: 'FILL' 1;">space_dashboard</span>
+<span class="font-['Inter'] text-[10px] font-bold uppercase tracking-widest mt-1">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center dark:text-slate-500 hover:dark:text-white transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="route">route</span>
+<span class="font-['Inter'] text-[10px] font-bold uppercase tracking-widest mt-1">Tracking</span>
+</a>
+<a class="flex flex-col items-center justify-center dark:text-slate-500 hover:dark:text-white transition-all active:scale-90 duration-200 relative" href="#">
+<span class="material-symbols-outlined" data-icon="notifications_active">notifications_active</span>
+<span class="font-['Inter'] text-[10px] font-bold uppercase tracking-widest mt-1">Alerts</span>
+<div class="absolute top-0 right-1 w-2 h-2 bg-error rounded-full"></div>
+</a>
+<a class="flex flex-col items-center justify-center dark:text-slate-500 hover:dark:text-white transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span class="font-['Inter'] text-[10px] font-bold uppercase tracking-widest mt-1">History</span>
+</a>
+</nav>
+</body></html>

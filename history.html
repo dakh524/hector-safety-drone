@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HECTOR - Detailed History</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white min-h-screen p-4 md:p-8">
+    <div class="max-w-5xl mx-auto">
+        <header class="flex justify-between items-center mb-8 bg-gray-800 p-6 rounded-2xl border border-gray-700 shadow-lg">
+            <h1 class="text-3xl font-black text-blue-400 tracking-wider">Mission Logs</h1>
+            <a href="dashboard.html" class="bg-gray-700 hover:bg-gray-600 px-6 py-3 rounded-xl transition font-bold shadow-md border border-gray-600">Back to Hub</a>
+        </header>
+        
+        <div id="historyList" class="space-y-6">
+            <!-- Items injected here -->
+        </div>
+    </div>
+    <script>
+        const history = JSON.parse(localStorage.getItem("historyData") || "[]");
+        const list = document.getElementById('historyList');
+        
+        if(history.length === 0) {
+            list.innerHTML = `
+                <div class="bg-gray-800 rounded-3xl border border-gray-700 p-20 text-center shadow-2xl">
+                    <span class="text-7xl mb-6 block drop-shadow-md">📭</span>
+                    <p class="text-gray-400 text-2xl font-medium tracking-wide">No missions recorded yet.</p>
+                </div>`;
+        } else {
+            history.forEach((trip, i) => {
+                const isSafe = trip.score > 80;
+                list.innerHTML += `
+                    <div class="bg-gray-800 p-8 rounded-3xl border border-gray-700 shadow-2xl hover:border-blue-500/50 transition-colors duration-300">
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 border-b border-gray-700 pb-6 gap-4">
+                            <div>
+                                <h3 class="text-3xl font-black text-white uppercase tracking-widest">${trip.userName}</h3>
+                                <p class="text-sm text-blue-400 font-mono mt-2 bg-blue-900/30 px-3 py-1 rounded inline-block">LOG #${history.length - i} • ${trip.date}</p>
+                            </div>
+                            <div class="bg-green-500/10 text-green-400 border border-green-500/30 px-5 py-2.5 rounded-full text-sm font-black uppercase tracking-widest flex items-center gap-3 shadow-inner">
+                                <span class="w-3 h-3 rounded-full bg-green-400 animate-pulse shadow-[0_0_8px_#4ade80]"></span> ${trip.status}
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+                            <div class="bg-gray-900/60 p-5 rounded-2xl border border-gray-700/50 shadow-inner">
+                                <p class="text-gray-500 mb-3 uppercase text-xs font-black tracking-widest">Route</p>
+                                <p class="font-bold text-white text-lg">${trip.start}</p>
+                                <p class="text-blue-500 text-sm my-1">↓ to ↓</p>
+                                <p class="font-bold text-white text-lg">${trip.destination}</p>
+                            </div>
+                            <div class="bg-gray-900/60 p-5 rounded-2xl border border-gray-700/50 shadow-inner">
+                                <p class="text-gray-500 mb-3 uppercase text-xs font-black tracking-widest">Telemetry</p>
+                                <p class="font-bold text-white text-lg mb-2">⏱️ ${trip.timeTaken}</p>
+                                <p class="font-bold text-white text-lg">📏 ${trip.distance}</p>
+                            </div>
+                            <div class="bg-gray-900/60 p-5 rounded-2xl border border-gray-700/50 shadow-inner">
+                                <p class="text-gray-500 mb-3 uppercase text-xs font-black tracking-widest">Drone Ops</p>
+                                <p class="font-mono font-bold text-blue-400 text-lg mb-2">${trip.droneID}</p>
+                                <p class="font-bold text-yellow-400 text-base">🔋 -${trip.batteryUsed} Used</p>
+                            </div>
+                            <div class="bg-gray-900/60 p-5 rounded-2xl border border-gray-700/50 flex flex-col justify-center items-center text-center shadow-inner relative overflow-hidden">
+                                <div class="absolute inset-0 bg-${isSafe ? 'green' : 'yellow'}-500/5"></div>
+                                <p class="text-gray-500 mb-2 uppercase text-xs font-black tracking-widest w-full text-left relative z-10">AI Rating</p>
+                                <p class="${isSafe ? 'text-green-400' : 'text-yellow-400'} font-black text-4xl my-auto drop-shadow-lg relative z-10">${trip.score}% <span class="text-sm block mt-1 text-gray-400">SAFE</span></p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-4">
+                            <button onclick="alert('Google Maps view opening...')" class="flex-1 md:flex-none bg-gray-700 hover:bg-gray-600 px-8 py-4 rounded-xl font-bold transition shadow-md border border-gray-600 tracking-wide text-lg">View Map</button>
+                            <button onclick="alert('Replaying trip simulation...')" class="flex-1 md:flex-none bg-blue-600/20 text-blue-400 hover:bg-blue-600/40 px-8 py-4 rounded-xl font-black transition border border-blue-500/50 shadow-md tracking-wide text-lg">Replay Trip</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+    </script>
+</body>
+</html>

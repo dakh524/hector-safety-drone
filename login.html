@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HECTOR - Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center p-4">
+    <div class="bg-gray-800 p-8 rounded-xl w-full max-w-md shadow-2xl border border-gray-700">
+        <h1 class="text-3xl font-bold mb-6 text-center text-blue-400">HECTOR Safety Drone</h1>
+        <p class="text-gray-400 mb-6 text-center">Login to your account</p>
+        <form id="loginForm" class="space-y-4">
+            <div>
+                <label class="block text-sm text-gray-400 mb-1">Phone Number</label>
+                <input type="text" class="w-full bg-gray-700 rounded p-3 outline-none focus:ring-2 focus:ring-blue-500" value="9876543210">
+            </div>
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded transition">Login / Get OTP</button>
+        </form>
+        <div class="mt-4 text-center">
+            <a href="register.html" class="text-blue-400 hover:underline text-sm">Don't have an account? Register</a>
+        </div>
+    </div>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const otp = Math.floor(1000 + Math.random() * 9000);
+            alert(`Your OTP is: ${otp}\nAuto logging in...`);
+            localStorage.setItem("loggedIn", "true");
+            localStorage.setItem("userData", JSON.stringify({
+                name: "Priya",
+                phone: "9876543210",
+                aadhaar: "1234 5678 9123",
+                emergencyName: "Rahul",
+                emergencyPhone: "9876543211"
+            }));
+            window.location.href = 'dashboard.html';
+        });
+    </script>
+</body>
+</html>

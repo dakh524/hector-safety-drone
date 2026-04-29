@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HECTOR - Live Tracking</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .propeller { animation: spin 0.15s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        .siren-flash { animation: flash 0.5s infinite; }
+        @keyframes flash { 0%, 100% { background-color: rgba(220, 38, 38, 0); } 50% { background-color: rgba(220, 38, 38, 0.4); } }
+        
+        .map-bg {
+            background-color: #e5e3df;
+            background-image: 
+                linear-gradient(white 4px, transparent 4px),
+                linear-gradient(90deg, white 4px, transparent 4px),
+                linear-gradient(rgba(255,255,255,0.4) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.4) 1px, transparent 1px);
+            background-size: 150px 150px, 150px 150px, 30px 30px, 30px 30px;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen flex flex-col p-4 md:p-6 relative w-full overflow-hidden" id="bodyEl">
+    <!-- Video BG -->
+    <video autoplay loop muted playsinline class="fixed inset-0 w-full h-full object-cover opacity-15 pointer-events-none z-[-2]">
+        <source src="https://assets.mixkit.co/videos/preview/mixkit-drone-flying-over-a-city-at-night-24209-large.mp4" type="video/mp4">
+    </video>
+    <div class="fixed inset-0 bg-gray-900/40 backdrop-blur-md pointer-events-none z-[-1]"></div>
+    
+    <div id="sirenOverlay" class="fixed inset-0 pointer-events-none z-[100] hidden"></div>
+
+    <header class="flex justify-between items-center mb-4 bg-gray-800/90 backdrop-blur-xl p-5 rounded-2xl border border-gray-600 shadow-2xl z-50">
+        <div>
+            <h2 class="text-2xl font-black text-blue-400 tracking-wider flex items-center gap-2" id="statusHeading">
+                <span class="w-3 h-3 rounded-full bg-red-500 animate-pulse shadow-[0_0_10px_red]"></span> HECTOR PATROL
+            </h2>
+            <p id="etaText" class="text-gray-300 font-mono mt-2 text-sm bg-gray-900 px-3 py-1 rounded-md inline-block border border-gray-700">Phase: Drone Arriving</p>
+        </div>
+        <div class="text-right">
+            <div id="safetyScore" class="font-bold text-2xl font-mono drop-shadow-md text-yellow-400">95% SAFE</div>
+            <div id="batteryText" class="text-sm text-yellow-400 font-mono mt-1 font-bold">🔋 BATT: --%</div>
+        </div>
+    </header>
+
+    <!-- Map Container -->
+    <main class="flex-1 relative border-[6px] border-gray-700 rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.8)] z-10 bg-white">
+        <!-- Map Layer -->
+        <div id="mapLayer" class="absolute w-[300%] h-[300%] left-1/2 top-1/2 map-bg transition-transform duration-[2000ms] ease-linear" style="transform: translate(-50%, -50%) scale(1)">
+            
+            <div class="absolute top-[30%] left-[40%] text-gray-400/80 font-black text-3xl rotate-90 tracking-widest pointer-events-none">MARKET ROAD</div>
+            <div class="absolute top-[60%] left-[20%] text-gray-400/80 font-black text-2xl tracking-widest pointer-events-none">1ST AVENUE</div>
+            <div class="absolute top-[20%] left-[70%] text-gray-400/80 font-black text-2xl -rotate-45 tracking-widest pointer-events-none">HIGHWAY 42</div>
+
+            <!-- Polyline -->
+            <svg class="absolute inset-0 w-full h-full pointer-events-none" id="pathSvg">
+                <line id="routeLine" x1="0" y1="0" x2="0" y2="0" stroke="#3b82f6" stroke-width="8" stroke-dasharray="16,16" opacity="0.8" stroke-linecap="round"/>
+            </svg>
+
+            <!-- Destination -->
+            <div id="destDot" class="absolute w-12 h-12 -ml-6 -mt-12 z-10 drop-shadow-2xl transition-all duration-[2000ms] linear">
+                <div class="w-12 h-12 bg-green-500 rounded-full border-[5px] border-white flex items-center justify-center text-white font-bold text-xl shadow-lg">📍</div>
+            </div>
+
+            <!-- User -->
+            <div id="userDot" class="absolute w-8 h-8 bg-blue-600 rounded-full border-4 border-white shadow-[0_0_20px_rgba(37,99,235,0.9)] -ml-4 -mt-4 transition-all duration-[2000ms] linear z-20">
+                <div class="absolute inset-0 bg-blue-400 rounded-full animate-ping opacity-60 scale-150"></div>
+            </div>
+            
+            <!-- Patrol Drones (Visual only) -->
+            <div id="patrol1" class="absolute w-14 h-14 -ml-7 -mt-7 transition-all duration-[2000ms] linear z-15 opacity-50 filter grayscale">
+                <div class="relative w-full h-full bg-gray-800 rounded-full border-2 border-gray-400 flex items-center justify-center">
+                    <span class="text-2xl">🚁</span>
+                </div>
+            </div>
+            <div id="patrol2" class="absolute w-14 h-14 -ml-7 -mt-7 transition-all duration-[2000ms] linear z-15 opacity-50 filter grayscale">
+                <div class="relative w-full h-full bg-gray-800 rounded-full border-2 border-gray-400 flex items-center justify-center">
+                    <span class="text-2xl">🚁</span>
+                </div>
+            </div>
+
+            <!-- Main Drone -->
+            <div id="droneDot" class="absolute w-20 h-20 -ml-10 -mt-10 transition-all duration-[2000ms] linear z-30 drop-shadow-2xl">
+                <div class="relative w-full h-full bg-gray-900 rounded-full border-[3px] border-gray-500 flex items-center justify-center shadow-[inset_0_0_15px_rgba(0,0,0,1)]">
+                    <span class="text-4xl">🚁</span>
+                    <!-- Props -->
+                    <div class="absolute -top-2 -left-2 w-8 h-1.5 bg-gray-300 rounded-full propeller origin-center shadow-md"></div>
+                    <div class="absolute -top-2 -right-2 w-8 h-1.5 bg-gray-300 rounded-full propeller origin-center shadow-md"></div>
+                    <div class="absolute -bottom-2 -left-2 w-8 h-1.5 bg-gray-300 rounded-full propeller origin-center shadow-md"></div>
+                    <div class="absolute -bottom-2 -right-2 w-8 h-1.5 bg-gray-300 rounded-full propeller origin-center shadow-md"></div>
+                    <!-- Signal -->
+                    <div class="absolute top-2 left-2 flex gap-1 opacity-90">
+                        <div class="w-1 h-2 bg-green-400"></div>
+                        <div class="w-1 h-3 bg-green-400"></div>
+                        <div class="w-1 h-4 bg-green-400"></div>
+                    </div>
+                    <!-- Alt -->
+                    <div class="absolute -bottom-7 bg-black text-[11px] px-2 py-0.5 rounded text-green-400 font-mono tracking-widest whitespace-nowrap border border-gray-700">ALT:120m</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute top-5 left-5 bg-white text-black px-4 py-2 rounded-xl text-sm font-black shadow-xl flex items-center gap-3 z-40 border-2 border-gray-200">
+            <span class="w-3 h-3 rounded-full bg-red-600 animate-pulse shadow-[0_0_10px_red]"></span>
+            <span id="liveBadgeTxt">Finding Nearest Drone</span>
+        </div>
+        
+        <!-- Map Controls -->
+        <div class="absolute bottom-6 right-5 flex flex-col gap-3 z-40">
+            <div id="btnZoomIn" class="w-14 h-14 bg-white text-gray-800 rounded-2xl shadow-2xl flex items-center justify-center font-black text-3xl cursor-pointer hover:bg-gray-100 border border-gray-200 transition active:scale-95 select-none">+</div>
+            <div id="btnZoomOut" class="w-14 h-14 bg-white text-gray-800 rounded-2xl shadow-2xl flex items-center justify-center font-black text-3xl cursor-pointer hover:bg-gray-100 border border-gray-200 transition active:scale-95 select-none">-</div>
+            <div id="btnCompass" class="w-14 h-14 bg-white text-gray-800 rounded-full shadow-2xl flex items-center justify-center mt-3 cursor-pointer text-2xl border-[3px] border-blue-500 hover:bg-gray-100 transition active:scale-95 select-none">🧭</div>
+        </div>
+    </main>
+
+    <footer class="flex justify-between gap-6 z-50 mt-6">
+        <button id="sirenBtn" class="flex-1 bg-gradient-to-r from-red-600 to-red-800 hover:from-red-500 hover:to-red-700 text-white font-black py-5 rounded-2xl transition shadow-[0_0_30px_rgba(220,38,38,0.5)] tracking-widest text-xl border-2 border-red-400 active:scale-95">
+            🚨 TRIGGER SIREN
+        </button>
+        <button onclick="window.location.href='dashboard.html'" class="flex-1 bg-gray-800 hover:bg-gray-700 border-2 border-gray-600 text-white font-bold py-5 rounded-2xl transition text-lg shadow-lg active:scale-95">
+            End SOS
+        </button>
+    </footer>
+
+    <script>
+        const tripData = JSON.parse(localStorage.getItem("tripData"));
+        let droneData = JSON.parse(localStorage.getItem("droneData"));
+        const userData = JSON.parse(localStorage.getItem("userData") || "{}");
+        if(!tripData || !droneData) window.location.href = "dashboard.html";
+
+        let userX = tripData.userX, userY = tripData.userY;
+        let destX = tripData.destX, destY = tripData.destY;
+        let droneX = tripData.droneX, droneY = tripData.droneY;
+        let battery = droneData.battery;
+        let speed = droneData.speed;
+        let initialDist = (Math.sqrt((destX - userX)**2 + (destY - userY)**2) * 0.1).toFixed(1);
+
+        // Dummy patrol drones starting slightly apart
+        let p1X = droneX + 15, p1Y = droneY - 20;
+        let p2X = droneX - 25, p2Y = droneY + 10;
+
+        const uDot = document.getElementById('userDot'), dDot = document.getElementById('droneDot'), dstDot = document.getElementById('destDot');
+        const p1 = document.getElementById('patrol1'), p2 = document.getElementById('patrol2');
+        const mapLayer = document.getElementById('mapLayer'), routeLine = document.getElementById('routeLine');
+        
+        let mapScale = 1;
+        
+        // Audio for siren
+        const sirenAudio = new Audio('https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg');
+        sirenAudio.loop = true;
+        sirenAudio.volume = 0.2; // Mild sound
+        
+        // Multilingual Voice Output Logic
+        const langDict = {
+            en: {
+                start: "SOS triggered. Nearest patrol drone dispatched.",
+                arrive: "I am here, you are safe now. A strong woman stands up for herself. A stronger woman stands up for everybody else. Let's move to your destination.",
+                complete: "You reached safely.",
+                code: "en-US"
+            },
+            ta: {
+                start: "அவசர சமிக்ஞை பெறப்பட்டது. அருகில் உள்ள ட்ரோன் அனுப்பப்பட்டுள்ளது.",
+                arrive: "நான் வந்துவிட்டேன், நீங்கள் இப்போது பாதுகாப்பாக உள்ளீர்கள். ஒரு வலிமையான பெண் தனக்காக நிற்கிறாள். மிகவும் வலிமையான பெண் அனைவருக்காகவும் நிற்கிறாள். உங்கள் இலக்கிற்கு செல்வோம்.",
+                complete: "நீங்கள் பாதுகாப்பாக சென்றடைந்தீர்கள்.",
+                code: "ta-IN"
+            },
+            hi: {
+                start: "एसओएस ट्रिगर किया गया। निकटतम गश्ती ड्रोन भेजा गया है।",
+                arrive: "मैं यहाँ हूँ, आप अब सुरक्षित हैं। एक मजबूत महिला अपने लिए खड़ी होती है। एक ज्यादा मजबूत महिला सबके लिए खड़ी होती है। चलिए आपकी मंजिल तक चलते हैं।",
+                complete: "आप सुरक्षित रूप से पहुँच गए हैं।",
+                code: "hi-IN"
+            }
+        };
+
+        const prefLang = localStorage.getItem('prefLang') || 'en';
+        const msgs = langDict[prefLang];
+
+        function speak(text) {
+            if('speechSynthesis' in window) {
+                window.speechSynthesis.cancel(); // Clear queue for immediate response
+                const msg = new SpeechSynthesisUtterance(text);
+                msg.lang = msgs.code;
+                msg.rate = 0.9;
+                window.speechSynthesis.speak(msg);
+            }
+        }
+
+        speak(msgs.start);
+
+        function updateUI() {
+            dstDot.style.left = destX + '%'; dstDot.style.top = destY + '%';
+            uDot.style.left = userX + '%'; uDot.style.top = userY + '%';
+            dDot.style.left = droneX + '%'; dDot.style.top = droneY + '%';
+            p1.style.left = p1X + '%'; p1.style.top = p1Y + '%';
+            p2.style.left = p2X + '%'; p2.style.top = p2Y + '%';
+            
+            mapLayer.style.transform = `translate(-${userX}%, -${userY}%) scale(${mapScale})`;
+            
+            if(phase === "APPROACHING") {
+                routeLine.setAttribute('x1', droneX + '%'); routeLine.setAttribute('y1', droneY + '%');
+                routeLine.setAttribute('x2', userX + '%'); routeLine.setAttribute('y2', userY + '%');
+            } else {
+                routeLine.setAttribute('x1', userX + '%'); routeLine.setAttribute('y1', userY + '%');
+                routeLine.setAttribute('x2', destX + '%'); routeLine.setAttribute('y2', destY + '%');
+            }
+        }
+        
+        let phase = "APPROACHING"; 
+        updateUI();
+
+        const interval = setInterval(() => {
+            // Patrol wandering
+            p1X += (Math.random() - 0.5) * 5; p1Y += (Math.random() - 0.5) * 5;
+            p2X += (Math.random() - 0.5) * 5; p2Y += (Math.random() - 0.5) * 5;
+
+            if (phase === "APPROACHING") {
+                let dx = userX - droneX, dy = userY - droneY;
+                let dist = Math.sqrt(dx*dx + dy*dy);
+                
+                if (dist < 2) {
+                    phase = "MOVING";
+                    speak(msgs.arrive);
+                    document.getElementById('liveBadgeTxt').innerText = "Drone Escorting User";
+                    document.getElementById('etaText').innerText = "Phase: Escorting";
+                } else {
+                    droneX += dx * 0.2;
+                    droneY += dy * 0.2;
+                }
+            } else if (phase === "MOVING") {
+                let dx = destX - userX, dy = destY - userY;
+                let distToDest = Math.sqrt(dx*dx + dy*dy);
+                
+                if (distToDest < 1) {
+                    clearInterval(interval);
+                    speak(msgs.complete);
+                    
+                    tripData.status = "Completed";
+                    localStorage.setItem("tripData", JSON.stringify(tripData));
+                    
+                    let history = JSON.parse(localStorage.getItem("historyData") || "[]");
+                    history.unshift({
+                        date: new Date().toLocaleString(),
+                        userName: userData.name || "Priya",
+                        start: "Market Road", destination: "Home",
+                        timeTaken: Math.max(1, Math.round((new Date().getTime() - tripData.startTime)/60000)) + " min",
+                        distance: initialDist + " km", droneID: droneData.id,
+                        score: window.currentScore || 95, status: "Completed",
+                        batteryUsed: (droneData.battery - battery).toFixed(1) + "%"
+                    });
+                    localStorage.setItem("historyData", JSON.stringify(history));
+                    setTimeout(() => window.location.href = "complete.html", 4000);
+                    return;
+                }
+
+                userX += dx * 0.05; userY += dy * 0.05;
+                droneX = userX - 2; droneY = userY - 2; // Drone flies right next to user
+                
+                let eta = (distToDest / speed * 10).toFixed(0);
+                document.getElementById('etaText').innerText = `ETA: ~${eta} min`;
+            }
+
+            updateUI();
+
+            battery -= 0.5;
+            document.getElementById('batteryText').innerText = `🔋 BATT: ${Math.max(0, battery).toFixed(1)}%`;
+
+            let score = Math.floor(75 + Math.random() * 20);
+            window.currentScore = score;
+            const scoreEl = document.getElementById('safetyScore');
+            scoreEl.innerText = `${score}% SAFE`;
+            
+            localStorage.setItem("tripData", JSON.stringify({ ...tripData, userX, userY, droneX, droneY, battery, score }));
+        }, 2000);
+
+        // Map buttons logic
+        document.getElementById('btnZoomIn').addEventListener('click', () => { mapScale += 0.2; updateUI(); });
+        document.getElementById('btnZoomOut').addEventListener('click', () => { mapScale = Math.max(0.4, mapScale - 0.2); updateUI(); });
+        document.getElementById('btnCompass').addEventListener('click', () => { mapScale = 1; updateUI(); });
+
+        // Siren toggle logic
+        let isSirenOn = false;
+        const sirenBtn = document.getElementById('sirenBtn');
+        const sirenOverlay = document.getElementById('sirenOverlay');
+        const h2 = document.getElementById('statusHeading');
+
+        function toggleSiren() {
+            isSirenOn = !isSirenOn;
+            if(isSirenOn) {
+                sirenBtn.innerHTML = '🔕 SIREN OFF';
+                sirenBtn.className = 'flex-1 bg-gray-600 hover:bg-gray-500 text-white font-black py-5 rounded-2xl transition tracking-widest text-xl border-2 border-gray-400 shadow-xl active:scale-95';
+                sirenAudio.play();
+                sirenOverlay.classList.remove('hidden');
+                sirenOverlay.classList.add('siren-flash');
+                h2.innerHTML = `<span class="w-3 h-3 rounded-full bg-white animate-pulse"></span> EMERGENCY ACTIVE`;
+                h2.classList.replace('text-blue-400', 'text-red-500');
+                h2.classList.add('animate-pulse', 'drop-shadow-[0_0_10px_red]');
+            } else {
+                sirenBtn.innerHTML = '🚨 TRIGGER SIREN';
+                sirenBtn.className = 'flex-1 bg-gradient-to-r from-red-600 to-red-800 hover:from-red-500 hover:to-red-700 text-white font-black py-5 rounded-2xl transition shadow-[0_0_30px_rgba(220,38,38,0.5)] tracking-widest text-xl border-2 border-red-400 active:scale-95';
+                sirenAudio.pause();
+                sirenAudio.currentTime = 0; // Reset audio
+                sirenOverlay.classList.add('hidden');
+                sirenOverlay.classList.remove('siren-flash');
+                h2.innerHTML = `<span class="w-3 h-3 rounded-full bg-red-500 animate-pulse shadow-[0_0_10px_red]"></span> HECTOR PATROL`;
+                h2.classList.replace('text-red-500', 'text-blue-400');
+                h2.classList.remove('animate-pulse', 'drop-shadow-[0_0_10px_red]');
+            }
+        }
+        sirenBtn.addEventListener('click', toggleSiren);
+    </script>
+</body>
+</html>

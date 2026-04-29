@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    body {
+      background-color: #0A192F;
+      font-family: 'Inter', sans-serif;
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "inverse-surface": "#e0e2ed",
+            "on-secondary-fixed-variant": "#39475f",
+            "primary-fixed-dim": "#adc7ff",
+            "on-secondary-fixed": "#0d1c32",
+            "on-tertiary-fixed-variant": "#374767",
+            "on-secondary": "#233148",
+            "on-primary-fixed": "#001a41",
+            "surface": "#10131b",
+            "tertiary-fixed": "#d8e2ff",
+            "tertiary-fixed-dim": "#b6c6ed",
+            "surface-bright": "#363942",
+            "on-error-container": "#ffdad6",
+            "on-surface": "#e0e2ed",
+            "on-tertiary-fixed": "#091b39",
+            "secondary-fixed-dim": "#b9c7e4",
+            "error": "#ffb4ab",
+            "on-primary-container": "#00285b",
+            "secondary": "#b9c7e4",
+            "secondary-container": "#3c4962",
+            "on-background": "#e0e2ed",
+            "inverse-on-surface": "#2d3039",
+            "surface-container-lowest": "#0b0e16",
+            "outline": "#8b90a0",
+            "primary": "#adc7ff",
+            "on-primary": "#002e68",
+            "surface-container": "#1c2027",
+            "on-surface-variant": "#c1c6d7",
+            "surface-tint": "#adc7ff",
+            "surface-container-high": "#272a32",
+            "background": "#10131b",
+            "on-primary-fixed-variant": "#004493",
+            "secondary-fixed": "#d6e3ff",
+            "outline-variant": "#414754",
+            "primary-fixed": "#d8e2ff",
+            "surface-variant": "#31353d",
+            "inverse-primary": "#005bc0",
+            "surface-dim": "#10131b",
+            "error-container": "#93000a",
+            "on-error": "#690005",
+            "on-secondary-container": "#abb9d6",
+            "primary-container": "#4a8eff",
+            "surface-container-highest": "#31353d",
+            "on-tertiary": "#20304f",
+            "surface-container-low": "#181c23",
+            "tertiary": "#b6c6ed",
+            "tertiary-container": "#8191b5",
+            "on-tertiary-container": "#192948"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "unit": "8px",
+            "card-padding": "24px",
+            "gutter": "24px",
+            "margin": "32px",
+            "container-max-width": "1440px"
+          },
+          "fontFamily": {
+            "display-lg": ["Inter"],
+            "data-mono": ["Inter"],
+            "label-caps": ["Inter"],
+            "body-md": ["Inter"],
+            "title-sm": ["Inter"],
+            "headline-md": ["Inter"]
+          },
+          "fontSize": {
+            "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+            "data-mono": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+            "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+            "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+            "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+            "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface antialiased min-h-screen flex flex-col">
+<!-- Top Navigation Shell (Contextual Suppression Logic Applied: Suppressed for focus screen) -->
+<header class="fixed top-0 w-full z-50 flex items-center justify-between px-6 py-4 dark:bg-[#0A192F]/80 backdrop-blur-2xl border-b border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.1)]">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined dark:text-[#007BFF] text-2xl">shield_with_heart</span>
+<span class="text-2xl font-black tracking-tighter dark:text-[#007BFF] italic">HECTOR</span>
+</div>
+<div class="w-10 h-10 rounded-full border border-white/20 overflow-hidden">
+<img alt="Operator Profile" class="w-full h-full object-cover" data-alt="A high-resolution portrait of a modern security operator in a professional tech environment. The subject is wearing a sleek, dark tactical uniform with subtle glowing blue accents. The lighting is dramatic and cinematic, with cool blue tones and deep shadows that reinforce a mission-critical and highly secure atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvKJR4TIVhpzNYlxQKCyfpiTImVEuPkw2DolxAMhdFB69PxPmKtg-OLOc01eBF91rNLOFXSRyhnEP7mbch-lCWyEmEpy6sJr0iGVHJeylv7auMgHTuMtQVWvfl8YcFaXElbyUVKn1DRHvQlKpFMZKO5WU0_4GbZNJveNsgkjq0QTL9Qg_xgRZzlq1YQlhY-kI543l9n9U6WAOCgP2zJCz1EWdbSRdfwVkGumFplEibCCvSm0V9WtVkUC9iKCCNvyOBIDamoOll96I"/>
+</div>
+</header>
+<main class="flex-grow pt-24 pb-32 px-6 flex flex-col items-center justify-center max-w-[1440px] mx-auto w-full">
+<!-- Success Celebration Area -->
+<div class="text-center mb-12">
+<div class="relative inline-block mb-6">
+<div class="absolute inset-0 bg-primary/20 blur-3xl rounded-full scale-150"></div>
+<div class="relative w-32 h-32 bg-primary/10 border-2 border-primary/30 rounded-full flex items-center justify-center shadow-[0_0_50px_rgba(0,123,255,0.3)]">
+<span class="material-symbols-outlined text-primary text-6xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+<h1 class="font-display-lg text-display-lg text-white mb-2">You reached safely</h1>
+<p class="font-body-md text-body-md text-on-surface-variant italic">"Stay safe. You are protected by HECTOR."</p>
+</div>
+<!-- Trip Summary Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl mb-12">
+<!-- Total Time -->
+<div class="glass-card p-card-padding rounded-xl flex flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-primary mb-3">schedule</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest mb-1">Total Time</span>
+<span class="font-headline-md text-headline-md text-white">12 mins</span>
+</div>
+<!-- Distance -->
+<div class="glass-card p-card-padding rounded-xl flex flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-primary mb-3">route</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest mb-1">Distance</span>
+<span class="font-headline-md text-headline-md text-white">2.4 km</span>
+</div>
+<!-- Avg Safety Score -->
+<div class="glass-card p-card-padding rounded-xl flex flex-col items-center justify-center text-center relative overflow-hidden">
+<div class="absolute top-0 right-0 p-2">
+<span class="flex h-2 w-2 rounded-full bg-[#4ade80] animate-pulse"></span>
+</div>
+<span class="material-symbols-outlined text-[#4ade80] mb-3">verified_user</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest mb-1">Safety Score</span>
+<span class="font-display-lg text-headline-md text-[#4ade80]">96%</span>
+</div>
+</div>
+<!-- Map Visualization Container -->
+<div class="w-full max-w-4xl h-64 rounded-2xl glass-card overflow-hidden relative mb-12">
+<img class="w-full h-full object-cover opacity-50 grayscale contrast-125" data-alt="A stylized digital map interface showing a completed trip route through a modern urban landscape at night. The map is rendered in deep blues and greys with a glowing cyan neon line representing the path taken. Small glowing data points and telemetry markers are scattered along the route, creating a sophisticated mission-control visual style." data-location="Tokyo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoq2kkWpdDFEy3_RSayWUeFxVpVj2aJjx7eSyf4Jsn1oexP5vT45vmWCYaroN-IkIuVVrWcAZMni5Dz0Bcs0O1rpeHzaQltlKCGMNRaxnakgbq18T_voI5hguZdqNhi3M1-afM6C5Rizt2v0halcZNhvcDrOdp1EsGltCD2KVcI5-uRL_SGSQc_9a7v26JvySc-bkJFhh3UIQurdKdnJW1l60dAD3M-mEI8Av_FuSosPB7uwETVC0xl2EHlfUM1RKtdTMB208fII4"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent"></div>
+<div class="absolute bottom-4 left-6 flex items-center gap-3">
+<div class="p-2 bg-primary/20 rounded-lg border border-primary/30 backdrop-blur-md">
+<span class="material-symbols-outlined text-primary text-sm">location_on</span>
+</div>
+<div>
+<p class="font-label-caps text-label-caps text-white">Destination Secured</p>
+<p class="text-[10px] text-on-surface-variant">Arrival confirmed via drone telemetry</p>
+</div>
+</div>
+</div>
+<!-- Primary Actions -->
+<div class="flex flex-col md:flex-row gap-4 w-full max-w-md">
+<button class="flex-1 bg-primary text-on-primary font-title-sm text-title-sm py-4 rounded-xl flex items-center justify-center gap-2 transition-all active:scale-95 shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-xl">history</span>
+        View History
+      </button>
+<button class="flex-1 bg-white/5 border border-white/10 text-white font-title-sm text-title-sm py-4 rounded-xl flex items-center justify-center gap-2 transition-all hover:bg-white/10 active:scale-95">
+<span class="material-symbols-outlined text-xl">home</span>
+        Return Home
+      </button>
+</div>
+</main>
+<!-- Navigation Drawer (Suppressed per task focus) -->
+<!-- Bottom Navigation Shell -->
+<footer class="fixed bottom-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe dark:bg-[#0A192F]/90 backdrop-blur-3xl border-t border-white/10 shadow-[0_-10px_40px_rgba(0,123,255,0.15)] md:hidden">
+<div class="flex flex-col items-center justify-center dark:text-slate-500 hover:dark:text-white transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined">space_dashboard</span>
+<span class="font-['Inter'] text-[10px] font-bold uppercase tracking-widest mt-1">Dashboard</span>
+</div>
+<div class="flex flex-col items-center justify-center dark:text-slate-500 hover:dark:text-white transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined">route</span>
+<span class="font-['Inter'] text-[10px] font-bold uppercase tracking-widest mt-1">Tracking</span>
+</div>
+<div class="flex flex-col items-center justify-center dark:text-slate-500 hover:dark:text-white transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined">notifications_active</span>
+<span class="font-['Inter'] text-[10px] font-bold uppercase tracking-widest mt-1">Alerts</span>
+</div>
+<div class="flex flex-col items-center justify-center dark:text-[#007BFF] dark:bg-[#007BFF]/10 rounded-xl px-4 py-2 border border-[#007BFF]/20 active:scale-90 duration-200">
+<span class="material-symbols-outlined">history</span>
+<span class="font-['Inter'] text-[10px] font-bold uppercase tracking-widest mt-1">History</span>
+</div>
+</footer>
+</body></html>

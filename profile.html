@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HECTOR - Your Data</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white min-h-screen p-4 md:p-8">
+    <div class="max-w-5xl mx-auto">
+        <header class="flex justify-between items-center mb-8 bg-gray-800 p-6 rounded-2xl border border-gray-700 shadow-lg">
+            <h1 class="text-3xl font-black text-blue-400 tracking-wider">Your Data Profile</h1>
+            <a href="dashboard.html" class="bg-gray-700 hover:bg-gray-600 px-6 py-3 rounded-xl transition font-bold shadow border border-gray-600 tracking-wide">Back to Hub</a>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Personal -->
+            <div class="bg-gray-800 p-8 rounded-3xl border border-gray-700 shadow-2xl">
+                <h2 class="text-2xl font-black text-white mb-6 border-b border-gray-700 pb-4 uppercase tracking-widest flex items-center gap-3">
+                    <span>👤</span> Personal Details
+                </h2>
+                <div class="space-y-4 text-base">
+                    <p><span class="text-gray-500 block uppercase text-xs font-bold tracking-widest mb-1">Full Name</span> <span id="pName" class="font-black text-2xl text-white">Priya</span></p>
+                    <p><span class="text-gray-500 block uppercase text-xs font-bold tracking-widest mb-1">Phone Number</span> <span id="pPhone" class="font-bold text-lg">9876543210</span></p>
+                    <p><span class="text-gray-500 block uppercase text-xs font-bold tracking-widest mb-1">Aadhaar Number</span> <span id="pAadhaar" class="font-mono text-lg text-blue-300">1234 5678 9123</span></p>
+                    <p><span class="text-gray-500 block uppercase text-xs font-bold tracking-widest mb-1">Email</span> <span class="font-bold text-lg">priya@example.com</span></p>
+                    <p><span class="text-gray-500 block uppercase text-xs font-bold tracking-widest mb-1">Blood Group</span> <span class="font-black text-xl text-red-500 bg-red-500/10 px-2 py-1 rounded inline-block">O+</span></p>
+                    <p><span class="text-gray-500 block uppercase text-xs font-bold tracking-widest mb-1">Address</span> <span class="font-bold text-lg">42, Market Road</span></p>
+                    <p><span class="text-gray-500 block uppercase text-xs font-bold tracking-widest mb-1">City, State</span> <span class="font-bold text-lg">Chennai, TN</span></p>
+                </div>
+            </div>
+
+            <!-- Family & Emergency -->
+            <div class="space-y-8">
+                <div class="bg-gray-800 p-8 rounded-3xl border border-gray-700 shadow-2xl">
+                    <h2 class="text-2xl font-black text-white mb-6 border-b border-gray-700 pb-4 uppercase tracking-widest flex items-center gap-3">
+                        <span>👨‍👩‍👧‍👦</span> Family Details
+                    </h2>
+                    <div class="space-y-4 text-base">
+                        <p><span class="text-gray-500 block uppercase text-xs font-bold tracking-widest mb-1">Mother Name</span> <span class="font-bold text-lg">Lakshmi</span></p>
+                        <p><span class="text-gray-500 block uppercase text-xs font-bold tracking-widest mb-1">Father Name</span> <span class="font-bold text-lg">Ramesh</span></p>
+                        <p><span class="text-gray-500 block uppercase text-xs font-bold tracking-widest mb-1">Guardian Name</span> <span class="font-bold text-lg text-gray-400">N/A</span></p>
+                        <div class="grid grid-cols-2 gap-4">
+                            <p><span class="text-gray-500 block uppercase text-xs font-bold tracking-widest mb-1">Family Phone 1</span> <span class="font-bold text-lg">9876543211</span></p>
+                            <p><span class="text-gray-500 block uppercase text-xs font-bold tracking-widest mb-1">Family Phone 2</span> <span class="font-bold text-lg">9876543212</span></p>
+                        </div>
+                        <p><span class="text-gray-500 block uppercase text-xs font-bold tracking-widest mb-1">Home Address</span> <span class="font-bold text-lg">42, Market Road, Chennai</span></p>
+                    </div>
+                </div>
+
+                <div class="bg-gray-800 p-8 rounded-3xl border-2 border-red-900/50 shadow-2xl relative overflow-hidden">
+                    <div class="absolute inset-0 bg-red-500/5 pointer-events-none"></div>
+                    <h2 class="text-2xl font-black text-red-400 mb-6 border-b border-gray-700 pb-4 uppercase tracking-widest flex items-center gap-3 relative z-10">
+                        <span>🚨</span> Emergency Contacts
+                    </h2>
+                    <div class="space-y-4 text-base relative z-10">
+                        <p><span class="text-gray-500 block uppercase text-xs font-bold tracking-widest mb-1">Primary Emergency Contact</span> <span id="peName" class="font-black text-2xl text-white">Rahul</span></p>
+                        <p><span class="text-gray-500 block uppercase text-xs font-bold tracking-widest mb-1">Emergency Phone</span> <span id="pePhone" class="font-bold text-xl text-red-400">9876543211</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-10 flex flex-col md:flex-row gap-6">
+            <button onclick="alert('Edit mode activated')" class="flex-1 bg-gray-700 hover:bg-gray-600 py-5 rounded-2xl font-black text-lg transition border border-gray-500 shadow-lg tracking-widest uppercase">Edit Data</button>
+            <button onclick="alert('Profile encrypted and securely shared with local police dispatch.')" class="flex-1 bg-blue-600 hover:bg-blue-500 py-5 rounded-2xl font-black text-lg transition shadow-[0_0_20px_rgba(37,99,235,0.4)] tracking-widest uppercase border border-blue-400">Share With Police</button>
+            <button onclick="alert('Downloading ID card PDF...')" class="flex-1 bg-green-600 hover:bg-green-500 py-5 rounded-2xl font-black text-lg transition shadow-[0_0_20px_rgba(34,197,94,0.4)] tracking-widest uppercase border border-green-400">Download ID</button>
+        </div>
+    </div>
+    <script>
+        const u = JSON.parse(localStorage.getItem('userData') || '{}');
+        if(u.name) document.getElementById('pName').innerText = u.name;
+        if(u.phone) document.getElementById('pPhone').innerText = u.phone;
+        if(u.aadhaar) document.getElementById('pAadhaar').innerText = u.aadhaar;
+        if(u.emergencyName) document.getElementById('peName').innerText = u.emergencyName;
+        if(u.emergencyPhone) document.getElementById('pePhone').innerText = u.emergencyPhone;
+    </script>
+</body>
+</html>
