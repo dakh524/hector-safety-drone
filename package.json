@@ -1,0 +1,9 @@
+{
+  "name": "hector-safety-drone",
+  "version": "1.0.0",
+  "description": "HECTOR Safety Drone Hackathon Demo",
+  "scripts": {
+    "build": "echo 'Static HTML build - no compilation needed'",
+    "start": "npx http-server"
+  }
+}
